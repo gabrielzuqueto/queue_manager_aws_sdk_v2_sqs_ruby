@@ -80,13 +80,13 @@ class QueueManager
 
   def get_queue_url
     begin
-      @queue_url ||= client.get_queue_url({queue_name: queue_name}).queue_url
+      client.get_queue_url({queue_name: queue_name}).queue_url
     rescue Aws::SQS::Errors::NonExistentQueue
       create_queue
     end
   end
 
   def create_queue
-    @queue_url ||= client.create_queue({queue_name: queue_name},{:http_open_timeout => 1.hours, :http_read_timeout => 1.hours, :logger => nil, :visibility_timeout => 1.minutes}).queue_url
+    client.create_queue({queue_name: queue_name},{:http_open_timeout => 1.hours, :http_read_timeout => 1.hours, :logger => nil, :visibility_timeout => 1.minutes}).queue_url
   end
 end
