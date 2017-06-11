@@ -1,11 +1,11 @@
 class QueueManager
-  def initialize(queue_name, visibility_timeout = 1.minutes)
+  def initialize(queue_name, visibility_timeout = 60)
     @queue_name = queue_name
     @visibility_timeout = visibility_timeout
   end
 
   def send_message(message_data)
-    client.send_message({queue_url: queue_url, message_body: data })
+    client.send_message({queue_url: queue_url, message_body: message_data })
   end
 
   def receive_message
@@ -87,6 +87,6 @@ class QueueManager
   end
 
   def create_queue
-    client.create_queue({queue_name: queue_name},{:http_open_timeout => 1.hours, :http_read_timeout => 1.hours, :logger => nil, :visibility_timeout => 1.minutes}).queue_url
+    client.create_queue({queue_name: queue_name},{:http_open_timeout => 3600, :http_read_timeout => 3600, :logger => nil, :visibility_timeout => 60}).queue_url
   end
 end
